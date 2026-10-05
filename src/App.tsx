@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import './App.css'
 import { storeConfig } from './storeConfig'
 import { buildOrderMessage } from './order'
-import { SellerIntakePage } from './SellerIntake'
+import { SellerIntakePage } from './SellerIntakePage'
 
 type Cart = Record<number, number>
 type CheckoutDetails = { name: string; location: string; note: string }
