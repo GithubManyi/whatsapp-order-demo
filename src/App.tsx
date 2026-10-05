@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import './App.css'
-
-type Product = {
-  id: number
-  name: string
-  price: number
-  image: string
-}
+import { storeConfig } from './storeConfig'
 
 type Cart = Record<number, number>
 
@@ -17,54 +11,8 @@ type CheckoutDetails = {
   note: string
 }
 
-const SELLER_WHATSAPP = '+254790290527' // demo number — replace later
-
-const products: Product[] = [
-  {
-    id: 1,
-    name: 'Classic Sneakers',
-    price: 2500,
-    image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 2,
-    name: 'Black Hoodie',
-    price: 1800,
-    image:
-      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    name: 'Leather Handbag',
-    price: 3200,
-    image:
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 4,
-    name: 'Classic Watch',
-    price: 3500,
-    image:
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 5,
-    name: 'Sunglasses',
-    price: 1200,
-    image:
-      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 6,
-    name: 'Casual T-Shirt',
-    price: 950,
-    image:
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
-  },
-]
-
 function App() {
+  const products = storeConfig.products
   const [cart, setCart] = useState<Cart>({})
   const [cartOpen, setCartOpen] = useState(false)
   const [checkoutOpen, setCheckoutOpen] = useState(false)
@@ -144,7 +92,7 @@ function App() {
     })
 
     const message = [
-      'Hello Demo Store 👋',
+      `Hello ${storeConfig.name} 👋`,
       '',
       "I'd like to place an order:",
       '',
@@ -154,9 +102,7 @@ function App() {
       '',
       `Name: ${details.name.trim()}`,
       `Delivery: ${details.location.trim()}`,
-      details.note.trim()
-        ? `Note: ${details.note.trim()}`
-        : '',
+      details.note.trim() ? `Note: ${details.note.trim()}` : '',
       '',
       'Sent from your online order page.',
     ]
@@ -164,9 +110,8 @@ function App() {
       .join('\n')
 
     const encodedMessage = encodeURIComponent(message)
-
     const whatsappUrl =
-      `https://wa.me/${SELLER_WHATSAPP}?text=${encodedMessage}`
+      `https://wa.me/${storeConfig.whatsapp}?text=${encodedMessage}`
 
     window.location.href = whatsappUrl
   }
@@ -175,11 +120,13 @@ function App() {
     <div className="store">
       <header className="store-header">
         <div className="header-brand">
-          <div className="brand-mark">D</div>
+          <div className="brand-mark">
+            {storeConfig.name.charAt(0).toUpperCase()}
+          </div>
 
           <div>
-            <h1>Demo Store</h1>
-            <p>Order easily through WhatsApp</p>
+            <h1>{storeConfig.name}</h1>
+            <p>{storeConfig.tagline}</p>
           </div>
         </div>
 
